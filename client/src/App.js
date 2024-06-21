@@ -45,7 +45,7 @@ const App = () => {
         <div className=''>
             <CustomerForm onCustomerAdded={handleCustomerAdded} />
             <CustomerGrid customers={customers} handlePushToCRMbyOne={handlePushToCRMbyOne}/>
-            <button onClick={handlePushToCRM} className='btn bg-primary ms-4 fs-3 rounded-pill'>Push to CRM</button>
+            <button onClick={handlePushToCRM} className='btn bg-primary ms-4 fs-3 rounded-pill'>Bulk Push to CRM</button>
         </div>
     );
 };
