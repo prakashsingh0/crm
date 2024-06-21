@@ -28,3 +28,12 @@ export const pushToCRM = async (customer) => {
         throw error.response.data;
     }
 };
+
+export const pushToCRMOne = async (id) => {
+    try {
+        const response = await axios.post(`${API_URL}/customers/push/${id}`);
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};

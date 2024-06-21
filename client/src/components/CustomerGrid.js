@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CustomerGrid = ({ customers }) => {
+const CustomerGrid = ({ customers, handlePushToCRMbyOne }) => {
     return (
         <div className='mt-4 fs-4 mx-4'>
             <table className='table'>
@@ -17,13 +17,20 @@ const CustomerGrid = ({ customers }) => {
                 <tbody>
                     {customers.map((customer) => (
                         <tr key={customer._id}>
-                            <td>{customer.phoneNumber}</td>
+                            <td scope='row'>{customer.phoneNumber}</td>
                             <td>{customer.firstName}</td>
                             <td>{customer.lastName}</td>
                             <td>{customer.email}</td>
                             <td>{`${customer.address.street}, ${customer.address.city}, ${customer.address.state}, ${customer.address.zip}`}</td>
                             <td>{customer.currentOrganization}</td>
                             <td className='bg-danger text-center'>Edit</td>
+                            <td 
+                                className='bg-primary text-center' 
+                                style={{ cursor: 'pointer' }} 
+                                onClick={() => handlePushToCRMbyOne(customer._id)}
+                            >
+                                Push to CRM
+                            </td>
                         </tr>
                     ))}
                 </tbody>

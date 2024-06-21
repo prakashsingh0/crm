@@ -35,4 +35,18 @@ const pushToCRM = async (req, res) => {
     }
 };
 
-module.exports = { addCustomer, getCustomers, pushToCRM };
+const pushToCRMByOne = async (req, res) => {
+    try {
+        
+        const customerInDb= await Customer.findById(req.params.id);
+        console.log(req.params.id);
+       
+            await pushToHubSpot(customerInDb);
+       
+        res.status(200).json({ message: 'Pushed to CRM successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'CRM push failed', error: error.message });
+    }
+};
+
+module.exports = { addCustomer, getCustomers, pushToCRM, pushToCRMByOne };

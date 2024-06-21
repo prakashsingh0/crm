@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CustomerForm from './components/CustomerForm';
 import CustomerGrid from './components/CustomerGrid';
-import { getCustomers, pushToCRM } from './api/customerApi';
+import { getCustomers, pushToCRM, pushToCRMOne } from './api/customerApi';
 
 const App = () => {
     const [customers, setCustomers] = useState([]);
@@ -32,10 +32,19 @@ const App = () => {
         }
     };
 
+    const handlePushToCRMbyOne = async (id) => {
+        try {
+            const response = await pushToCRMOne(id);
+            alert(response.message);
+        } catch (error) {
+            console.error('Error pushing to CRM:', error);
+        }
+    };
+
     return (
         <div className=''>
             <CustomerForm onCustomerAdded={handleCustomerAdded} />
-            <CustomerGrid customers={customers} />
+            <CustomerGrid customers={customers} handlePushToCRMbyOne={handlePushToCRMbyOne}/>
             <button onClick={handlePushToCRM} className='btn bg-primary ms-4 fs-3 rounded-pill'>Push to CRM</button>
         </div>
     );
