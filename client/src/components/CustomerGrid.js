@@ -23,6 +23,7 @@ const CustomerGrid = ({ customers }) => {
                             <td>{customer.email}</td>
                             <td>{`${customer.address.street}, ${customer.address.city}, ${customer.address.state}, ${customer.address.zip}`}</td>
                             <td>{customer.currentOrganization}</td>
+                            <td className='bg-danger text-center'>Edit</td>
                         </tr>
                     ))}
                 </tbody>
