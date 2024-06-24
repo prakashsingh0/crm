@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { addCustomer } from '../api/customerApi';
+import { ToastContainer, toast } from 'react-toastify';
 
 const CustomerForm = ({ onCustomerAdded }) => {
     const [formData, setFormData] = useState({
@@ -55,7 +56,7 @@ const CustomerForm = ({ onCustomerAdded }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        if (name.includes('address.')) {
+        if (name.startsWith('address.')) {
             const addressField = name.split('.')[1];
             setFormData((prevData) => ({
                 ...prevData,
@@ -83,107 +84,119 @@ const CustomerForm = ({ onCustomerAdded }) => {
                     address: { street: '', city: '', state: '', zip: '' },
                     currentOrganization: '',
                 });
+                toast.success(newCustomer?.message);
                 setErrors({});
             } catch (error) {
+                toast.error(error.response.data.message);
                 console.error('Error adding customer:', error);
             }
         }
     };
 
     return (
-        <div className='container p-4'>
-        <form onSubmit={handleSubmit} className='border py-2 px-4 d-flex flex-column  justify-items-center '>
-            <div className='my-2 row'>
-                <label className='col-3 pe-2 fs-3'>Phone Number:</label>
-                <input className='col-4 rounded-pill px-2'
-                    type="text"
-                    name="phoneNumber"
-                    value={formData.phoneNumber}
-                    onChange={handleChange}
-                />
-                {errors.phoneNumber && <span>{errors.phoneNumber}</span>}
-            </div>
-            <div className='my-2 row'>
-                <label className='col-3 pe-2 fs-3'>First Name:</label>
-                <input className='col-4 rounded-pill px-2'
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                />
-                {errors.firstName && <span>{errors.firstName}</span>}
-            </div>
-            <div className='my-2 row'>
-                <label className='col-3 pe-2 fs-3'>Last Name:</label>
-                <input className='col-4 rounded-pill px-2'
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                />
-                {errors.lastName && <span>{errors.lastName}</span>}
-            </div>
-            <div className='my-2 row'>
-                <label className='col-3 pe-2 fs-3'>Email:</label>
-                <input className='col-4 rounded-pill px-2'
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                />
-                {errors.email && <span>{errors.email}</span>}
-            </div>
-            <div className='my-2 row'>
-                <label className='col-3 pe-2 fs-3'>Street Address:</label>
-                <input className='col-4 rounded-pill px-2'
-                    type="text"
-                    name="address.street"
-                    value={formData.address.street}
-                    onChange={handleChange}
-                />
-                {errors.street && <span>{errors.street}</span>}
-            </div>
-            <div className='my-2 row'>
-                <label className='col-3 pe-2 fs-3'>City:</label>
-                <input className='col-4 rounded-pill px-2'
-                    type="text"
-                    name="address.city"
-                    value={formData.address.city}
-                    onChange={handleChange}
-                />
-                {errors.city && <span>{errors.city}</span>}
-            </div>
-            <div className='my-2 row'>
-                <label className='col-3 pe-2 fs-3'>State:</label>
-                <input className='col-4 rounded-pill px-2'
-                    type="text"
-                    name="address.state"
-                    value={formData.address.state}
-                    onChange={handleChange}
-                />
-                {errors.state && <span>{errors.state}</span>}
-            </div>
-            <div className='my-2 row'>
-                <label className='col-3 pe-2 fs-3'>Zip Code:</label>
-                <input className='col-4 rounded-pill px-2'
-                    type="text"
-                    name="address.zip"
-                    value={formData.address.zip}
-                    onChange={handleChange}
-                />
-                {errors.zip && <span>{errors.zip}</span>}
-            </div>
-            <div className='my-2 row'>
-                <label className='col-3 pe-2 fs-3'>Current Organization:</label>
-                <input className='col-4 rounded-pill px-2'
-                    type="text"
-                    name="currentOrganization"
-                    value={formData.currentOrganization}
-                    onChange={handleChange}
-                />
-            </div>
-            <button type="submit" className='btn fs-3 bg-primary'>Submit</button>
-        </form>
+        <div className="container pt-2 mb-2">
+            <form onSubmit={handleSubmit} className="border py-2 px-4 d-flex flex-column justify-items-center">
+                <div className="my-2 row">
+                    <label className="col-3 pe-2 fs-3">Phone Number:</label>
+                    <input
+                        className="col-4 rounded-pill px-2"
+                        type="text"
+                        name="phoneNumber"
+                        value={formData.phoneNumber}
+                        onChange={handleChange}
+                    />
+                    {errors.phoneNumber && <span>{errors.phoneNumber}</span>}
+                </div>
+                <div className="my-2 row">
+                    <label className="col-3 pe-2 fs-3">First Name:</label>
+                    <input
+                        className="col-4 rounded-pill px-2"
+                        type="text"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                    />
+                    {errors.firstName && <span>{errors.firstName}</span>}
+                </div>
+                <div className="my-2 row">
+                    <label className="col-3 pe-2 fs-3">Last Name:</label>
+                    <input
+                        className="col-4 rounded-pill px-2"
+                        type="text"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                    />
+                    {errors.lastName && <span>{errors.lastName}</span>}
+                </div>
+                <div className="my-2 row">
+                    <label className="col-3 pe-2 fs-3">Email:</label>
+                    <input
+                        className="col-4 rounded-pill px-2"
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                    />
+                    {errors.email && <span>{errors.email}</span>}
+                </div>
+                <div className="my-2 row">
+                    <label className="col-3 pe-2 fs-3">Street Address:</label>
+                    <input
+                        className="col-4 rounded-pill px-2"
+                        type="text"
+                        name="address.street"
+                        value={formData.address.street}
+                        onChange={handleChange}
+                    />
+                    {errors.street && <span>{errors.street}</span>}
+                </div>
+                <div className="my-2 row">
+                    <label className="col-3 pe-2 fs-3">City:</label>
+                    <input
+                        className="col-4 rounded-pill px-2"
+                        type="text"
+                        name="address.city"
+                        value={formData.address.city}
+                        onChange={handleChange}
+                    />
+                    {errors.city && <span>{errors.city}</span>}
+                </div>
+                <div className="my-2 row">
+                    <label className="col-3 pe-2 fs-3">State:</label>
+                    <input
+                        className="col-4 rounded-pill px-2"
+                        type="text"
+                        name="address.state"
+                        value={formData.address.state}
+                        onChange={handleChange}
+                    />
+                    {errors.state && <span>{errors.state}</span>}
+                </div>
+                <div className="my-2 row">
+                    <label className="col-3 pe-2 fs-3">Zip Code:</label>
+                    <input
+                        className="col-4 rounded-pill px-2"
+                        type="text"
+                        name="address.zip"
+                        value={formData.address.zip}
+                        onChange={handleChange}
+                    />
+                    {errors.zip && <span>{errors.zip}</span>}
+                </div>
+                <div className="my-2 row">
+                    <label className="col-3 pe-2 fs-3">Current Organization:</label>
+                    <input
+                        className="col-4 rounded-pill px-2"
+                        type="text"
+                        name="currentOrganization"
+                        value={formData.currentOrganization}
+                        onChange={handleChange}
+                    />
+                </div>
+                <button type="submit" className="btn fs-3 bg-primary">Submit</button>
+            </form>
+            <ToastContainer />
         </div>
     );
 };
